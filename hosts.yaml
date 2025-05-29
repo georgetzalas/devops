@@ -1,0 +1,15 @@
+---
+dbservers:
+  hosts:
+    dbserver-vm:
+      ansible_host: dbserver
+
+appservers:
+  hosts:
+    appserver-vm:
+      ansible_host: appserver
+
+dockerservers:
+  hosts:
+    docker-vm:
+      ansible_host: dockervm
