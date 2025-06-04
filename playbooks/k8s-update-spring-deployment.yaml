@@ -29,58 +29,58 @@
         kubernetes.core.k8s:
           state: present
           kubeconfig: "/var/lib/jenkins/.kube/config"
-        definition:
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: "{{ deployment_name }}"
-            namespace: "{{ namespace }}"
-            labels:
-              app: "{{ container_name }}"
-          spec:
-            replicas: 1
-            selector:
-              matchLabels:
+          definition:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: "{{ deployment_name }}"
+              namespace: "{{ namespace }}"
+              labels:
                 app: "{{ container_name }}"
-            template:
-              metadata:
-                labels:
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
                   app: "{{ container_name }}"
-              spec:
-                containers:
-                  - name: "{{ container_name }}"
-                    image: "{{ new_image }}"
-                    ports:
-                      - containerPort: 8080
-                        name: "{{ container_name }}"
-                    env:
-                      - name: SPRING_DATASOURCE_URL
-                        value: jdbc:postgresql://postgres:5432/dsdb
-                      - name: SPRING_DATASOURCE_USERNAME
-                        value: dbuser
-                      - name: SPRING_DATASOURCE_PASSWORD
-                        value: pass123
-                    livenessProbe:
-                      httpGet:
-                        path: "/actuator/health/liveness"
-                        port: 8080
-                      failureThreshold: 20
-                      periodSeconds: 10
-                      initialDelaySeconds: 30
-                    readinessProbe:
-                      httpGet:
-                        path: "/actuator/health/readiness"
-                        port: 8080
-                      failureThreshold: 10
-                      periodSeconds: 10
-                      initialDelaySeconds: 30
-                    resources:
-                      requests:
-                        cpu: 200m
-                        memory: 256Mi
-                      limits:
-                        cpu: 1000m
-                        memory: 512Mi
+              template:
+                metadata:
+                  labels:
+                    app: "{{ container_name }}"
+                spec:
+                  containers:
+                    - name: "{{ container_name }}"
+                      image: "{{ new_image }}"
+                      ports:
+                        - containerPort: 8080
+                          name: "{{ container_name }}"
+                      env:
+                        - name: SPRING_DATASOURCE_URL
+                          value: jdbc:postgresql://postgres:5432/dsdb
+                        - name: SPRING_DATASOURCE_USERNAME
+                          value: dbuser
+                        - name: SPRING_DATASOURCE_PASSWORD
+                          value: pass123
+                      livenessProbe:
+                        httpGet:
+                          path: "/actuator/health/liveness"
+                          port: 8080
+                        failureThreshold: 20
+                        periodSeconds: 10
+                        initialDelaySeconds: 30
+                      readinessProbe:
+                        httpGet:
+                          path: "/actuator/health/readiness"
+                          port: 8080
+                        failureThreshold: 10
+                        periodSeconds: 10
+                        initialDelaySeconds: 30
+                      resources:
+                        requests:
+                          cpu: 200m
+                          memory: 256Mi
+                        limits:
+                          cpu: 1000m
+                          memory: 512Mi
 
 
 
