@@ -24,7 +24,7 @@
       #              - name: "{{ container_name }}"
       #                image: "{{ new_image }}"
 
-    tasks:
+      tasks:
       - name: Apply Spring Deployment
         kubernetes.core.k8s:
           state: present
