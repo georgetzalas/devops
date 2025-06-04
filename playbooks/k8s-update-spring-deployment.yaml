@@ -34,6 +34,13 @@
                 containers:
                   - name: "{{ container_name }}"
                     image: "{{ new_image }}"
+                    env:
+                      - name: SPRING_DATASOURCE_URL
+                        value: "jdbc:postgresql://postgres:5432/dsdb"
+                      - name: SPRING_DATASOURCE_USERNAME
+                        value: "dbuser"
+                      - name: SPRING_DATASOURCE_PASSWORD
+                        value: "pass123"
                     ports:
                       - containerPort: 8080
 
