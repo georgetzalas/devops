@@ -8,7 +8,7 @@
       container_name: spring
       new_image: "ghcr.io/georgetzalas/spring:latest"
 
-    tasks:
+      #tasks:
       #- name: Update the deployment image
       #  kubernetes.core.k8s:
       #    state: present
