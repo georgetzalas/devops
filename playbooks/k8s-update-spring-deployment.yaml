@@ -28,6 +28,7 @@
       - name: Apply Spring Deployment
         kubernetes.core.k8s:
           state: present
+          kubeconfig: "/var/lib/jenkins/.kube/config"
         definition:
           apiVersion: apps/v1
           kind: Deployment
