@@ -3,7 +3,7 @@
     hosts: localhost
     gather_facts: no
     vars:
-      namespace: default
+      namespace_var: default
       deployment_name: spring-deployment
       container_name: spring
       new_image: "ghcr.io/georgetzalas/spring:latest"
@@ -14,7 +14,7 @@
           state: present
           kubeconfig: "/var/lib/jenkins/.kube/config"
           #kubeconfig: "~/.kube/config"
-          namespace: "{{ namespace }}"
+          namespace: "{{ namespace_var }}"
           kind: Deployment
           name: "{{ deployment_name }}"
           definition:
@@ -27,7 +27,7 @@
 
 
       - name: Wait for rollout to complete
-        command: kubectl rollout status deployment/{{ deployment_name }} -n {{ namespace }} --timeout=360s
+        command: kubectl rollout status deployment/{{ deployment_name }} -n {{ namespace_var }} --timeout=360s
         register: rollout_result
         environment:
           KUBECONFIG: "/var/lib/jenkins/.kube/config"
@@ -40,7 +40,7 @@
           kubeconfig: "/var/lib/jenkins/.kube/config"
           #kubeconfig: "~/.kube/config"
           kind: Pod
-          namespace: "{{ namespace }}"
+          namespace: "{{ namespace_var }}"
           label_selectors:
             - "app={{ deployment_name }}"
         register: pod_list
