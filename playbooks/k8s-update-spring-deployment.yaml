@@ -6,14 +6,14 @@
       namespace: default
       deployment_name: spring-deployment
       container_name: spring
-      new_image: "ghcr.io/tsadimas/ds-lab-2024:latest"
+      new_image: "ghcr.io/georgetzalas/spring:latest"
 
     tasks:
       - name: Update the deployment image
         kubernetes.core.k8s:
           state: present
-          #kubeconfig: "/var/lib/jenkins/.kube/devops-microk8s"
-          kubeconfig: "~/.kube/config"
+          kubeconfig: "/var/lib/jenkins/.kube/config"
+          #kubeconfig: "~/.kube/config"
           namespace: "{{ namespace }}"
           kind: Deployment
           name: "{{ deployment_name }}"
@@ -30,15 +30,15 @@
         command: kubectl rollout status deployment/{{ deployment_name }} -n {{ namespace }} --timeout=360s
         register: rollout_result
         environment:
-          #KUBECONFIG: "/var/lib/jenkins/.kube/devops-microk8s"
-          KUBECONFIG: "~/.kube/config"
+          KUBECONFIG: "/var/lib/jenkins/.kube/config"
+          #KUBECONFIG: "~/.kube/config"
         failed_when: "'successfully rolled out' not in rollout_result.stdout"
         changed_when: false
 
       - name: Get pods in deployment
         kubernetes.core.k8s_info:
-          #kubeconfig: "/var/lib/jenkins/.kube/devops-microk8s"
-          kubeconfig: "~/.kube/config"
+          kubeconfig: "/var/lib/jenkins/.kube/config"
+          #kubeconfig: "~/.kube/config"
           kind: Pod
           namespace: "{{ namespace }}"
           label_selectors:
