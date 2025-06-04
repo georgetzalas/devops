@@ -13,13 +13,21 @@
         kubernetes.core.k8s:
           state: present
           kubeconfig: "/var/lib/jenkins/.kube/config"
-          #kubeconfig: "~/.kube/config"
-          namespace: "{{ namespace_var }}"
-          kind: Deployment
-          name: "{{ deployment_name }}"
           definition:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: "{{ deployment_name }}"
+              namespace: "{{ namespace_var }}"
             spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  app: "{{ deployment_name }}"
               template:
+                metadata:
+                  labels:
+                    app: "{{ deployment_name }}"
                 spec:
                   containers:
                     - name: "{{ container_name }}"
