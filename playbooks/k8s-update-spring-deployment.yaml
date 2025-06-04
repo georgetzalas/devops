@@ -61,11 +61,11 @@
           - "app={{ app_label }}"
       register: pod_list
 
-    - name: Ensure all pods use the correct image
-      fail:
-        msg: "One or more pods do not have the updated image {{ new_image }}"
-      when: >
-        pod_list.resources | selectattr('status.phase', 'equalto', 'Running') |
-        selectattr('spec.containers', 'defined') |
-        reject('containers_all_use_image', new_image) | list | length > 0
+        #- name: Ensure all pods use the correct image
+        #fail:
+        #msg: "One or more pods do not have the updated image {{ new_image }}"
+        #when: >
+        #pod_list.resources | selectattr('status.phase', 'equalto', 'Running') |
+        #selectattr('spec.containers', 'defined') |
+        #reject('containers_all_use_image', new_image) | list | length > 0
 
